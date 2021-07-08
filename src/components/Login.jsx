@@ -13,19 +13,20 @@ export default function Login() {
     const handleSubmit = async (e) => {
         try{
             e.preventDefault()
-            console.log('do axios call!')
+            console.log('do axios call - from login.jsx line 16 🔥')
             // post to the backend with axios
             const requestBody = {
                 email: email,
                 password: password
             }
+            console.log('my server url: ', process.env.REACT_APP_SERVER_URL, ' - from login.js line 22 🔥');
 
         const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api-v1/users/login`, requestBody)
         console.log(response);
             // save the response to localstorage
         }
         catch(err){
-            console.log('handleSubmit catch: ',err);
+            console.log('handleSubmit catch: ', err);
         }
 
 
