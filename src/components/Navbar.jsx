@@ -2,30 +2,43 @@ import { Link } from 'react-router-dom'
 
 
 export default function Navbar(props) {
-    return(
-        <nav>
-            <Link to="/">
-                HOME! 
-            </Link>
-
+    // console.log('props of NAVBAR',props);
+    // if user is logged in
+    const loggedIn = (
+        <>
             {/* if user is logged in */}
             <Link to="/profile">
-                PROFILE! 
+                PROFILE! --
             </Link>
 
             <Link to="/">
-                <span onClick={props.handleLogout}>LOGOUT! </span>
+                <span onClick={props.handleLogout}>LOGOUT! -- </span>
             </Link>
+        </>
+    )
 
+    // if user is logged out
+    const loggedOut = (
+        <>
             {/* if user is logged out */}
             <Link to="/login">
-                LOGIN! 
+                LOGIN! --
             </Link>
 
             <Link to="/register">
-                NEW ACCOUNT! 
+                NEW ACCOUNT! --
+            </Link>
+        </>
+    )
+
+    return(
+        <nav>
+            <Link to="/">
+                HOME -- 
             </Link>
 
+            {props.currentUser ? loggedIn : loggedOut}
+            
         </nav>
     )
 }

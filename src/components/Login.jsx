@@ -38,7 +38,7 @@ export default function Login(props) {
             props.setCurrentUser(decoded)
         }
         catch(err){
-            if(err.response.status == 400){
+            if(err.response.status === 400){
                 setMessage('from login.jsx : ',err.response.data.msg)
             } else {
                 console.dir(err);
