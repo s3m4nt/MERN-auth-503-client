@@ -14,6 +14,7 @@ import {
   useState, 
   useEffect 
 } from 'react'
+import jwt from 'jsonwebtoken'
 
 const App = () => {
 
@@ -21,7 +22,18 @@ const App = () => {
 const [currentUser, setCurrentUser] = useState(null)
 
 // if the jwt is valid and user navigates away from site automatically log them back in
-useEffect(()=>{})
+useEffect(()=>{
+  // get token from local storage
+  const token = localStorage.getItem('jwtToken')
+  // if check for token
+  if(token){
+    setCurrentUser(jwt.decode(token))
+  } else {
+    // else set user in state to be null 
+    setCurrentUser(null)
+  }
+
+}, [])
 
 // function to log the user out
 const handleLogout = () => {
