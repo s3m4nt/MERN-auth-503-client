@@ -24,34 +24,37 @@ export default function Register(props) {
                 password: password
             }
 
-          // post reg data to server
-            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api-v1/users/register`, requestBody)
+      // post registration data to the server
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api-v1/users/register`, requestBody)
 
-          // take token out of the response
-            const { token } = response.data
+      // take the token out of the respnse
+      const { token } = response.data
 
-        //  set token in local storage
-            localStorage.setItem('jwtToken', token)
+      // set token in local storage
+      localStorage.setItem('jwtToken', token)
 
-          // decode the token
-            const decoded = jwt.decode(token)
+      // decode the token
+      const decoded = jwt.decode(token)
 
-          // set the user in the App.js state
-            props.setCurrentUser(decoded)
+      // set the user in the App.js state
+      props.setCurrentUser(decoded)
 
+    } catch (err) {
+      // set message if the error is a 400
+      if(err.response.status === 400) {
+        setMessage(err.response.data.msg)
+      } else {
+        console.log(err)
       }
-      catch(err){
-          // set message if the error is 400
-          if(err.response.status === 400){
-              setMessage(err.response.data.message)
-          } else {
-              console.log(err);
-          }
-      }
-      console.log('submit the form! 🌽')
+    }
+    console.log('submit the form! 🌽')
   }
 
   // redirect if the user is logged in
+        if(props.currentUser){
+            return <Redirect to='/' component={ Profile } setCurrentUser={ props.setCurrentUser } />
+        }
+
   return (
     <div>
       <h3>Registration form:</h3>
@@ -74,7 +77,7 @@ export default function Register(props) {
         <input 
           id='email-input'
           type='email'
-          placeholder='enter your email user...'
+          placeholder='enter your email'
           onChange={e => setEmail(e.target.value)}
           value={email}
         />
@@ -84,7 +87,7 @@ export default function Register(props) {
         <input 
           id='password-input'
           type='password'
-          placeholder='desired password'
+          placeholder='enter desired password'
           onChange={e => setPassword(e.target.value)}
           value={password}
         />

@@ -5,7 +5,7 @@ import Login from './Login'
 
 export default function Profile(props) {
     // state is information from the server
-    const [message, setMessage] = useState('here is your secret message, you lucky dog 🐶')
+    const [message, setMessage] = useState('Here is your secret message, you lucky dog 🐶')
 
     // hit the auth locked route on the backend
     useEffect(() => {
