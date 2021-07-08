@@ -7,7 +7,8 @@ import Welcome from './components/Welcome'
 import { 
   BrowserRouter as Router, 
   Switch, 
-  Route 
+  Route,
+  Redirect
 } from 'react-router-dom'
 import { 
   useState, 
@@ -24,8 +25,13 @@ useEffect(()=>{})
 
 // function to log the user out
 const handleLogout = () => {
-  console.log('log the user out');
-}
+  // delete the jwt that's in local storage
+if (localStorage.getItem('jwtToken')){
+  localStorage.removeItem('jwtToken')
+
+  // set user and state to be null
+  setCurrentUser(null)
+}}
 
   return (
 
@@ -45,20 +51,20 @@ const handleLogout = () => {
 
             <Route 
               path="/register"
-              render={ props => <Register {...props} currentUser={currentUser} setCurrentUser={setCurrentUser} /> }
+              render={ props => <Register {...props} currentUser={ currentUser } setCurrentUser={ setCurrentUser } /> }
             />
 
             <Route 
               path="/login"
-              render={ props => <Login {...props} currentUser={currentUser} setCurrentUser={setCurrentUser} /> }
+              render={ props => <Login {...props} currentUser={ currentUser } setCurrentUser={ setCurrentUser } /> }
             />
 
             {/* eventually we will do a condintional render here */}
             <Route 
-              path="/profile"
-              render={ props => <Profile {...props} currentUser={currentUser} setCurrentUser={setCurrentUser} /> }
-            />
-          </Switch>
+            path="/profile"
+            render={ props => currentUser ? <Profile {...props} currentUser={ currentUser } handleLogout={ handleLogout }/> : <Redirect to="/login" />}
+          />
+        </Switch>
         </div>
       {/* </div> */}
     </Router>
