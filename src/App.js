@@ -28,35 +28,39 @@ const handleLogout = () => {
 }
 
   return (
+
     <Router>
-      <header>
-        <Navbar currentUser={ currentUser } handleLogout={ handleLogout }/>
-      </header>
+      {/* <div className="mainContainer"> */}
 
-      <div className="App">
-        <Switch>
-          <Route 
-            exact path="/"
-            component={Welcome}
-          />
+        <header>
+          <Navbar currentUser={ currentUser } handleLogout={ handleLogout }/>
+        </header>
 
-          <Route 
-            path="/register"
-            render={ props => <Register {...props} currentUser={currentUser} setCurrentUser={setCurrentUser} /> }
-          />
+        <div className="App">
+          <Switch>
+            <Route 
+              exact path="/"
+              component={Welcome}
+            />
 
-          <Route 
-            path="/login"
-            render={ props => <Login {...props} currentUser={currentUser} setCurrentUser={setCurrentUser} /> }
-          />
+            <Route 
+              path="/register"
+              render={ props => <Register {...props} currentUser={currentUser} setCurrentUser={setCurrentUser} /> }
+            />
 
-          {/* eventually we will do a condintional render here */}
-          <Route 
-            path="/profile"
-            render={ props => <Profile {...props} currentUser={currentUser} setCurrentUser={setCurrentUser} /> }
-          />
-        </Switch>
-      </div>
+            <Route 
+              path="/login"
+              render={ props => <Login {...props} currentUser={currentUser} setCurrentUser={setCurrentUser} /> }
+            />
+
+            {/* eventually we will do a condintional render here */}
+            <Route 
+              path="/profile"
+              render={ props => <Profile {...props} currentUser={currentUser} setCurrentUser={setCurrentUser} /> }
+            />
+          </Switch>
+        </div>
+      {/* </div> */}
     </Router>
   );
 }

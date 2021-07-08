@@ -2,8 +2,10 @@ import { useState } from 'react'
 import Axios from 'axios'
 import jwt from 'jsonwebtoken'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
+import Profile from './Profile'
 
-export default function Login() {
+export default function Login(props) {
     // state for the controlled form
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -23,45 +25,59 @@ export default function Login() {
 
         const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api-v1/users/login`, requestBody)
         console.log(response);
-            // save the response to localstorage
+        // destructure the response 
+        const {token} = response.data
+
+        // save the response to localstorage
+        localStorage.setItem('jwtToken', token)
+
+        // decode the jwt token before we put it in state
+        const decoded = jwt.decode(token)
+
+        // set the user in App.js state
+            props.setCurrentUser(decoded)
         }
         catch(err){
-            console.log('handleSubmit catch: ', err);
+            if(err.response.status == 400){
+                setMessage('from login.jsx : ',err.response.data.msg)
+            } else {
+                console.dir(err);
+            }
         }
-
-
 }
 
+if(props.currentUser) return <Redirect to='/profile' component={ Profile } currentUser={props.currentUser}/>
+
     return(
-        <div>
-            <h3>Login To Your Account</h3>
+<div>
+    <h3>Login To Your Account</h3>
 
-            <p>{message}</p>
+    <p>{message}</p>
 
-            <form onSubmit={handleSubmit}>
-<label htmlFor={'email-input'}>email: </label>
-<input 
-    id={'email-input'}
-    type='email'
-    placeholder='user@domain.com'
-    onChange={e => setEmail(e.target.value)}
-    value={email}
-/>
+    <form onSubmit={handleSubmit}>
+        <label htmlFor={'email-input'}>email: </label>
+            <input 
+            id={'email-input'}
+            type='email'
+            placeholder='user@domain.com'
+            onChange={e => setEmail(e.target.value)}
+            value={email}
+            />
 
-<label htmlFor={'password-input'}>password: </label>
-<input
-    id='password-input'
-    type='password'
-    placeholder='password'
-    onChange={e => setPassword(e.target.value)}
-    value={password}
-/>
+        <label htmlFor={'password-input'}>password: </label>
+            <input
+            id='password-input'
+            type='password'
+            placeholder='password'
+            onChange={e => setPassword(e.target.value)}
+            value={password}
+            />
 
-<input
-type='submit'
-value='login'
-/>
-            </form>
-        </div>
+            <input
+            type='submit'
+            value='login'
+            />
+    </form>
+</div>
     )
 }

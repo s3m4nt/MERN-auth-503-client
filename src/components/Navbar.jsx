@@ -5,25 +5,25 @@ export default function Navbar(props) {
     return(
         <nav>
             <Link to="/">
-                HOME
+                HOME! 
             </Link>
 
             {/* if user is logged in */}
             <Link to="/profile">
-                PROFILE
+                PROFILE! 
             </Link>
 
             <Link to="/">
-                <span onClick={props.handleLogout}>LOGOUT!</span>
+                <span onClick={props.handleLogout}>LOGOUT! </span>
             </Link>
 
             {/* if user is logged out */}
             <Link to="/login">
-                LOGIN!
+                LOGIN! 
             </Link>
 
             <Link to="/register">
-                NEW ACCOUNT
+                NEW ACCOUNT! 
             </Link>
 
         </nav>

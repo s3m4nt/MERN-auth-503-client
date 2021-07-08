@@ -1,7 +1,7 @@
 export default function Register() {
     return(
         <div>
-            hello from Register component!
+            hello from Register!
         </div>
     )
 }
