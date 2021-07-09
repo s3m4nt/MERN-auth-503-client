@@ -83,6 +83,4 @@ if (localStorage.getItem('jwtToken')){
   );
 }
 
-export default App;
-
-// test git push
+export default App
